@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="Data Source" product="" version="" jdbc-version="" driver-name="" driver-version="" uuid="1cf349e1-c5ac-49e0-9368-3c1f6d6ccc40">
+    <synchronize>true</synchronize>
+    <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+    <jdbc-url>jdbc://</jdbc-url>
+    <table-pattern>LottoTicket</table-pattern>
+    <default-dialect>SQLite</default-dialect>
+    <libraries>
+      <library>
+        <url>jar://$PROJECT_DIR$/sqlite-jdbc-3.7.6.3-20110609.081603-3.jar!/</url>
+      </library>
+      <library>
+        <url>file://$PROJECT_DIR$/xerial-sqlite-license.txt</url>
+      </library>
+    </libraries>
+  </data-source>
+</component>

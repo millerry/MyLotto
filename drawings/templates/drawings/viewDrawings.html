@@ -1,0 +1,11 @@
+{% if latest_drawing_list %}
+    <ul>
+        {% for ticket in latest_drawing_list %}
+            <li><a href="maintainDrawing/{{ ticket.id }}">{{ ticket.val1 }}, {{ ticket.val2 }}, {{ ticket.val3 }}, {{ ticket.val4 }}, {{ ticket.val5 }}, {{ ticket.power_ball }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No drawings are available.</p>
+{% endif %}
+<input type="button" onclick="location.href ='/'" value="Home" />
+

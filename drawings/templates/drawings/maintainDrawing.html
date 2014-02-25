@@ -1,0 +1,39 @@
+<form method="post" action="{%  url 'drawings:addDrawing' %}" >
+    {% csrf_token %}
+    {% if drawing %} {% endif %}
+    <table>
+        <tr>
+            <th>Field</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>1st Number</td>
+            <td><input type='text' name='number1' maxlength="2" value="{{ drawing.val1 }}" /></td>
+        </tr>
+        <tr>
+            <td>2nd Number</td>
+            <td><input type='text' name='number2' maxlength="2" value="{{ drawing.val2 }}" /></td>
+        </tr>
+        <tr>
+            <td>3rd Number</td>
+            <td><input type='text' name='number3' maxlength="2" value="{{ drawing.val3 }}" /></td>
+        </tr>
+        <tr>
+            <td>4th Number</td>
+            <td><input type='text' name='number4' maxlength="2" value="{{ drawing.val4 }}" /></td>
+        </tr>
+        <tr>
+            <td>5th Number</td>
+            <td><input type='text' name='number5' maxlength="2" value="{{ drawing.val5 }}" /></td>
+        </tr>
+        <tr>
+            <td>Powerball</td>
+            <td><input type='text' name='powerball' maxlength="2" value="{{ drawing.power_ball }}" /></td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+            <td><input type='submit' name='submitButton' value='Submit' /></td>
+        </tr>
+    </table>
+    <input type="button" onclick="location.href ='/viewDrawings'" value="View Drawings" />
+</form>
