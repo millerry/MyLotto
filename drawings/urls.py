@@ -6,7 +6,11 @@ urlpatterns = patterns(
 
     url(r'^$', views.index, name='index'),
 
-    url(r'^viewDrawings/$', views.viewDrawings, name='viewDrawings'),
+    url(r'^viewTickets/viewDrawings/(?P<ticketId>\d+)$', views.viewDrawings, name='viewDrawings'),
+
+    url(r'^.+viewDrawings/(?P<ticketId>\d+)$', views.viewDrawings, name='viewDrawings'),
+
+    url(r'^viewTickets/$', views.viewTickets, name='viewTickets'),
 
     url(r'^.+maintainDrawing/(?P<drawingId>\d+)$', views.maintainDrawing, name='maintainDrawing'),
 

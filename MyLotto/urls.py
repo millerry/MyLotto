@@ -8,5 +8,5 @@ urlpatterns = patterns(
     url('', include('drawings.urls', namespace='drawings')),
     url(r'^/maintainDrawing/(?P<drawingId>\d+).+', include('drawings.urls', namespace='drawings')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^submit/', include('drawings.urls', namespace='drawings')),
+    # url(r'^submit/', include('drawings.urls', namespace='drawings')),
 )

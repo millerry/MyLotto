@@ -1,6 +1,5 @@
 <form method="post" action="{%  url 'drawings:addDrawing' %}" >
     {% csrf_token %}
-    {% if drawing %} {% endif %}
     <table>
         <tr>
             <th>Field</th>
@@ -35,5 +34,6 @@
             <td><input type='submit' name='submitButton' value='Submit' /></td>
         </tr>
     </table>
-    <input type="button" onclick="location.href ='/viewDrawings'" value="View Drawings" />
+{#    <input type="button" onclick='location.href ="viewDrawings/{{ drawing.lotto_ticket.id }}"' value="View Drawings" />#}
+{#    <input type="button" onclick=location.href ="{% url 'drawings:viewDrawings' drawing.lotto_ticket.id %}" value="View Drawings" />#}
 </form>

@@ -14,15 +14,21 @@ def index(request):
 
 def maintainDrawing(request, drawingId):
     print "in maintainDrawing"
-    context = RequestContext(request, {'drawing':Drawing.objects.get(id=drawingId), })
+    context = RequestContext(request, {'drawing': Drawing.objects.get(id=drawingId), 'ticketId': request.POST.get('ticketId')})
     return render(request, 'drawings/maintainDrawing.html', context)
 
 
-def viewDrawings(request):
+def viewDrawings(request, ticketId):
     print "in viewDrawings"
-    latest_drawing_list = Drawing.objects.all()
-    context = {'latest_drawing_list': latest_drawing_list}
+    context = RequestContext(request, {'lotto_ticket': LottoTicket.objects.get(id=ticketId), })
     return render(request, 'drawings/viewDrawings.html', context)
+
+
+def viewTickets(request):
+    print "in viewTickets"
+    allTickets = LottoTicket.objects.all()
+    context = {'latest_ticket_list': allTickets}
+    return render(request, 'drawings/viewTickets.html', context)
 
 
 def addDrawing(request): #, number2, number3, number4, number5, powerball):

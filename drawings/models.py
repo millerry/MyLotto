@@ -10,18 +10,17 @@ class LottoTicket(models.Model):
     date_purchased = models.DateField('Data Purchased')
     number_of_draws = models.IntegerField('Number of Draws')
 
-    def draw_dates(self):
-        draw_dates = []
-        first_draw = calendar.Ca
-        return timezone.datetime.day >= timezone.now() - datetime.timedelta(days=1)
+    # def draw_dates(self):
+    #     draw_dates = []
+    #     first_draw = calendar.Calendar
+    #     return timezone.datetime.day >= timezone.now() - datetime.timedelta(days=1)
 
     def __unicode__(self):
         return unicode(self.date_purchased)
 
 
 class Drawing(models.Model):
-    # lotto_ticket = models.ForeignKey(LottoTicket, blank=True, null=True)
-    drawing_date = models.DateField('Drawing Date')
+    lotto_ticket = models.ForeignKey(LottoTicket)
     val1 = models.IntegerField()
     val2 = models.IntegerField()
     val3 = models.IntegerField()

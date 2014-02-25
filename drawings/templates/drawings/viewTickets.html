@@ -1,0 +1,13 @@
+{% if latest_ticket_list %}
+    <ul>
+        {% for ticket in latest_ticket_list %}
+            <li><a href="viewDrawings/{{ ticket.id }}">{{ ticket.ticket_title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No tickets are available.</p>
+{% endif %}
+<input type="button" onclick="location.href ='/addTicket/'" value="Add Ticket" />
+<br />
+<input type="button" onclick="location.href ='/'" value="Home" />
+

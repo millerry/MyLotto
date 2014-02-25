@@ -1,11 +1,30 @@
-{% if latest_drawing_list %}
-    <ul>
-        {% for ticket in latest_drawing_list %}
-            <li><a href="maintainDrawing/{{ ticket.id }}">{{ ticket.val1 }}, {{ ticket.val2 }}, {{ ticket.val3 }}, {{ ticket.val4 }}, {{ ticket.val5 }}, {{ ticket.power_ball }}</a></li>
+{% if lotto_ticket %}
+    <table border="1" style="border-style:solid">
+    <tr>
+        <th>#1</th>
+        <th>#2</th>
+        <th>#3</th>
+        <th>#4</th>
+        <th>#5</th>
+        <th>PB</th>
+        <th>&nbsp;</th>
+    </tr>
+        {% for drawing in lotto_ticket.drawing_set.all %}
+            <tr>
+                <td>{{ drawing.val1 }}</td>
+                <td>{{ drawing.val2 }}</td>
+                <td>{{ drawing.val3 }}</td>
+                <td>{{ drawing.val4 }}</td>
+                <td>{{ drawing.val5 }}</td>
+                <td>{{ drawing.power_ball }}</td>
+                <td><a href="maintainDrawing/{{ drawing.id }}">Edit</a></td>
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No drawings are available.</p>
 {% endif %}
+<input type="button" onclick="location.href ='addDrawing/'" value="Add Drawing" />
+<br />
 <input type="button" onclick="location.href ='/'" value="Home" />
 
