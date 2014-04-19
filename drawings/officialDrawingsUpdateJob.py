@@ -57,8 +57,6 @@ json_data = json.loads(html)
 data_handler = parseHtml()
 data_handler.handle_data(json.loads(html))
 
-print OfficialDrawing.objects.get(drawing_date='2014-04-15').multiplier
-
 # script for creating a ticket and entering one drawing on it
 # ticket = LottoTicket()
 # ticket.ticket_title = 'April Ticket'

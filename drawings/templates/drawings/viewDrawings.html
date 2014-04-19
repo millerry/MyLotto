@@ -61,5 +61,26 @@
 {% else %}
     <p style="margin-left:25px;">No official drawings are available.</p>
 {% endif %}
+
+{% if winningDrawingsTable %}
+    <table border="1" style="border-style:solid; margin-left:25px; margin-top:25px;" >
+        <tr>
+            <th>&nbsp;Date&nbsp;</th>
+            <th>&nbsp;Winning Drawing&nbsp;</th>
+            <th>&nbsp;Winning Amount&nbsp;</th>
+        </tr>
+        {% for k,v in winningDrawingsTable.items%}
+            <tr style="text-align: center">
+                <td>{{ k | date:"DATE_FORMAT" }}</td>
+                {% for key,value in v.items %}
+                    <tr style="text-align: center">
+                    <td></td>
+                    <td>{{ key }}</td>
+                    <td>${{ value }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
 <input type="button" onclick="location.href ='/'" value="Home" style="margin-left:25px; width:100px;" />
 

@@ -22,7 +22,8 @@ def viewDrawings(request, ticketId):
     lottoTicket = LottoTicket.objects.get(id=ticketId)
     drawingsForm = viewDrawingsForm()
     context = RequestContext(request, {'lotto_ticket': LottoTicket.objects.get(id=ticketId),
-                                       'official_drawings': viewDrawingsForm.getApplicableOfficialDrawings(drawingsForm,lottoTicket.date_purchased, lottoTicket.number_of_draws)})
+                                       'official_drawings': viewDrawingsForm.getApplicableOfficialDrawings(drawingsForm,lottoTicket.date_purchased, lottoTicket.number_of_draws),
+                                       'winningDrawingsTable': drawingsForm.generatePayoutDictionary(lottoTicket, viewDrawingsForm.getApplicableOfficialDrawings(drawingsForm,lottoTicket.date_purchased, lottoTicket.number_of_draws))})
     return render(request, 'drawings/viewDrawings.html', context)
 
 
