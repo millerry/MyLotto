@@ -42,7 +42,6 @@ class OfficialDrawing(models.Model):
     val5 = models.IntegerField()
     power_ball = models.IntegerField()
     multiplier = models.IntegerField()
-    prize_amount = models.IntegerField()
 
     def __unicode__(self):
         return unicode(self.drawing_date)

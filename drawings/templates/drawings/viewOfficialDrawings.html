@@ -1,0 +1,28 @@
+{% if OfficialDrawing.objects.all %}
+    <table border="1" style="border-style:solid; margin-left:25px; margin-top:25px;" >
+        <tr>
+            <th>&nbsp;Date&nbsp;</th>
+            <th>&nbsp;#1&nbsp;</th>
+            <th>&nbsp;#2&nbsp;</th>
+            <th>&nbsp;#3&nbsp;</th>
+            <th>&nbsp;#4&nbsp;</th>
+            <th>&nbsp;#5&nbsp;</th>
+            <th>&nbsp;PB&nbsp;</th>
+            <th>&nbsp;Multiplier&nbsp;</th>
+        </tr>
+        {% for officialDrawing in OfficialDrawing.objects.all %}
+            <tr style="text-align: center">
+                <td>{{ officialDrawing.drawing_date }}</td>
+                <td>{{ officialDrawing.val1 }}</td>
+                <td>{{ officialDrawing.val2 }}</td>
+                <td>{{ officialDrawing.val3 }}</td>
+                <td>{{ officialDrawing.val4 }}</td>
+                <td>{{ officialDrawing.val5 }}</td>
+                <td>{{ officialDrawing.power_ball }}</td>
+                <td>{{ lotto_ticket.multiplier }}x</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p style="margin-left:25px;">No official drawings are available.</p>
+{% endif %}

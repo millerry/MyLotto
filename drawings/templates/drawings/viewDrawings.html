@@ -1,14 +1,15 @@
 {% if lotto_ticket %}
     <table border="1" style="border-style:solid; margin-left:25px; margin-top:25px;" >
-    <tr>
-        <th>&nbsp;#1&nbsp;</th>
-        <th>&nbsp;#2&nbsp;</th>
-        <th>&nbsp;#3&nbsp;</th>
-        <th>&nbsp;#4&nbsp;</th>
-        <th>&nbsp;#5&nbsp;</th>
-        <th>&nbsp;PB&nbsp;</th>
-        <th>&nbsp;</th>
-    </tr>
+        <tr>
+            <th>&nbsp;#1&nbsp;</th>
+            <th>&nbsp;#2&nbsp;</th>
+            <th>&nbsp;#3&nbsp;</th>
+            <th>&nbsp;#4&nbsp;</th>
+            <th>&nbsp;#5&nbsp;</th>
+            <th>&nbsp;MB&nbsp;</th>
+            <th>&nbsp;Multiplier?&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
         {% for drawing in lotto_ticket.drawing_set.all %}
             <tr style="text-align: center">
                 <td>{{ drawing.val1 }}</td>
@@ -17,6 +18,12 @@
                 <td>{{ drawing.val4 }}</td>
                 <td>{{ drawing.val5 }}</td>
                 <td>{{ drawing.power_ball }}</td>
+                <td>{% if lotto_ticket.multiplier_ind%}
+                        Y
+                    {% else %}
+                        N
+                    {% endif %}
+                </td>
                 <td><a href="maintainDrawing/{{ drawing.id }}">Edit</a></td>
             </tr>
         {% endfor %}
@@ -26,5 +33,33 @@
 {% endif %}
 {#<input type="button" onclick="location.href ='addDrawing/'" value="Add Drawing" />#}
 <br />
+{% if official_drawings %}
+    <table border="1" style="border-style:solid; margin-left:25px; margin-top:25px;" >
+        <tr>
+            <th>&nbsp;Date&nbsp;</th>
+            <th>&nbsp;#1&nbsp;</th>
+            <th>&nbsp;#2&nbsp;</th>
+            <th>&nbsp;#3&nbsp;</th>
+            <th>&nbsp;#4&nbsp;</th>
+            <th>&nbsp;#5&nbsp;</th>
+            <th>&nbsp;MB&nbsp;</th>
+            <th>&nbsp;Multiplier&nbsp;</th>
+        </tr>
+        {% for officialDrawing in official_drawings %}
+            <tr style="text-align: center">
+                <td>{{ officialDrawing.drawing_date }}</td>
+                <td>{{ officialDrawing.val1 }}</td>
+                <td>{{ officialDrawing.val2 }}</td>
+                <td>{{ officialDrawing.val3 }}</td>
+                <td>{{ officialDrawing.val4 }}</td>
+                <td>{{ officialDrawing.val5 }}</td>
+                <td>{{ officialDrawing.power_ball }}</td>
+                <td>{{ officialDrawing.multiplier }}x</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p style="margin-left:25px;">No official drawings are available.</p>
+{% endif %}
 <input type="button" onclick="location.href ='/'" value="Home" style="margin-left:25px; width:100px;" />
 

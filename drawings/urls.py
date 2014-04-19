@@ -14,5 +14,7 @@ urlpatterns = patterns(
 
     url(r'^.+maintainDrawing/(?P<drawingId>\d+)$', views.maintainDrawing, name='maintainDrawing'),
 
-    url(r'^submit/$', views.addDrawing, name='addDrawing')
+    url(r'^submit/$', views.addDrawing, name='addDrawing'),
+
+    url(r'^viewOfficial/$', views.addDrawing, name='addDrawing'),
 )

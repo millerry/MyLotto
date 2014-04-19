@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import RequestContext
 from django.utils import timezone
-from drawings.models import LottoTicket, Drawing
+from drawings.models import LottoTicket, Drawing, OfficialDrawing
 
 
 def index(request):
@@ -20,7 +20,7 @@ def maintainDrawing(request, drawingId):
 
 def viewDrawings(request, ticketId):
     print "in viewDrawings"
-    context = RequestContext(request, {'lotto_ticket': LottoTicket.objects.get(id=ticketId), })
+    context = RequestContext(request, {'lotto_ticket': LottoTicket.objects.get(id=ticketId), 'official_drawings':OfficialDrawing.objects.all(), })
     return render(request, 'drawings/viewDrawings.html', context)
 
 
