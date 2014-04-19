@@ -22,6 +22,7 @@ class parseHtml(HTMLParser):
             constructOfficialDrawing(item)
 
 
+# noinspection PyBroadException
 def constructOfficialDrawing(data):
     date_object = datetime.strptime(data['draw_date'], '%Y-%m-%dT%H:%M:%S')
     date_object = date_object.date()

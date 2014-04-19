@@ -11,11 +11,6 @@ class LottoTicket(models.Model):
     number_of_draws = models.IntegerField('Number of Draws')
     multiplier_ind = models.BooleanField(default=False)
 
-# def draw_dates(self):
-    #     draw_dates = []
-    #     first_draw = calendar.Calendar
-    #     return timezone.datetime.day >= timezone.now() - datetime.timedelta(days=1)
-
     def __unicode__(self):
         return unicode(self.date_purchased)
 
@@ -34,7 +29,7 @@ class Drawing(models.Model):
 
 
 class OfficialDrawing(models.Model):
-    drawing_date = models.DateField('Drawing Date', primary_key=True)
+    drawing_date = models.DateTimeField('Drawing Date', primary_key=True)
     val1 = models.IntegerField()
     val2 = models.IntegerField()
     val3 = models.IntegerField()

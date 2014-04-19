@@ -47,7 +47,7 @@
         </tr>
         {% for officialDrawing in official_drawings %}
             <tr style="text-align: center">
-                <td>{{ officialDrawing.drawing_date }}</td>
+                <td>{{ officialDrawing.drawing_date | date:"DATE_FORMAT" }}</td>
                 <td>{{ officialDrawing.val1 }}</td>
                 <td>{{ officialDrawing.val2 }}</td>
                 <td>{{ officialDrawing.val3 }}</td>

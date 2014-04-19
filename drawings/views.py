@@ -1,10 +1,9 @@
 
-from django.core.urlresolvers import reverse
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.shortcuts import render
 from django.template import RequestContext
 from django.utils import timezone
-from drawings.models import LottoTicket, Drawing, OfficialDrawing
+from drawings.models import LottoTicket, Drawing
+from forms import viewDrawingsForm
 
 
 def index(request):
@@ -20,7 +19,10 @@ def maintainDrawing(request, drawingId):
 
 def viewDrawings(request, ticketId):
     print "in viewDrawings"
-    context = RequestContext(request, {'lotto_ticket': LottoTicket.objects.get(id=ticketId), 'official_drawings':OfficialDrawing.objects.all(), })
+    lottoTicket = LottoTicket.objects.get(id=ticketId)
+    drawingsForm = viewDrawingsForm()
+    context = RequestContext(request, {'lotto_ticket': LottoTicket.objects.get(id=ticketId),
+                                       'official_drawings': viewDrawingsForm.getApplicableOfficialDrawings(drawingsForm,lottoTicket.date_purchased, lottoTicket.number_of_draws)})
     return render(request, 'drawings/viewDrawings.html', context)
 
 
