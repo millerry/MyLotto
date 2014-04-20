@@ -1,4 +1,5 @@
 {% if lotto_ticket %}
+    <h2 style="margin-left:25px;">{{ lotto_ticket.ticket_title }}</h2>
     <table border="1" style="border-style:solid; margin-left:25px; margin-top:25px;" >
         <tr>
             <th>&nbsp;#1&nbsp;</th>
@@ -6,8 +7,7 @@
             <th>&nbsp;#3&nbsp;</th>
             <th>&nbsp;#4&nbsp;</th>
             <th>&nbsp;#5&nbsp;</th>
-            <th>&nbsp;MB&nbsp;</th>
-            <th>&nbsp;Multiplier?&nbsp;</th>
+            <th>&nbsp;MegaBall&nbsp;</th>
             <th>&nbsp;</th>
         </tr>
         {% for drawing in lotto_ticket.drawing_set.all %}
@@ -18,12 +18,6 @@
                 <td>{{ drawing.val4 }}</td>
                 <td>{{ drawing.val5 }}</td>
                 <td>{{ drawing.power_ball }}</td>
-                <td>{% if lotto_ticket.multiplier_ind%}
-                        Y
-                    {% else %}
-                        N
-                    {% endif %}
-                </td>
                 <td><a href="maintainDrawing/{{ drawing.id }}">Edit</a></td>
             </tr>
         {% endfor %}
@@ -34,6 +28,7 @@
 {#<input type="button" onclick="location.href ='addDrawing/'" value="Add Drawing" />#}
 <br />
 {% if official_drawings %}
+    <h2 style="margin-left:25px;">Official Drawings To Date</h2>
     <table border="1" style="border-style:solid; margin-left:25px; margin-top:25px;" >
         <tr>
             <th>&nbsp;Date&nbsp;</th>
@@ -42,7 +37,7 @@
             <th>&nbsp;#3&nbsp;</th>
             <th>&nbsp;#4&nbsp;</th>
             <th>&nbsp;#5&nbsp;</th>
-            <th>&nbsp;MB&nbsp;</th>
+            <th>&nbsp;MegaBall&nbsp;</th>
             <th>&nbsp;Multiplier&nbsp;</th>
         </tr>
         {% for officialDrawing in official_drawings %}
@@ -63,22 +58,43 @@
 {% endif %}
 
 {% if winningDrawingsTable %}
+    <h2 style="margin-left:25px;">Winning Draws</h2>
     <table border="1" style="border-style:solid; margin-left:25px; margin-top:25px;" >
         <tr>
             <th>&nbsp;Date&nbsp;</th>
-            <th>&nbsp;Winning Drawing&nbsp;</th>
+            <th>&nbsp;#1&nbsp;</th>
+            <th>&nbsp;#2&nbsp;</th>
+            <th>&nbsp;#3&nbsp;</th>
+            <th>&nbsp;#4&nbsp;</th>
+            <th>&nbsp;#5&nbsp;</th>
+            <th>&nbsp;MegaBall&nbsp;</th>
             <th>&nbsp;Winning Amount&nbsp;</th>
         </tr>
         {% for k,v in winningDrawingsTable.items%}
-            <tr style="text-align: center">
-                <td>{{ k | date:"DATE_FORMAT" }}</td>
-                {% for key,value in v.items %}
+                {% if v.items %}
+                    {% for key,value in v.items %}
+                        <tr style="text-align: center">
+                        <td>{{ k | date:"DATE_FORMAT" }}</td>
+                        <td>{{ key.val1 }}</td>
+                        <td>{{ key.val2 }}</td>
+                        <td>{{ key.val3 }}</td>
+                        <td>{{ key.val4 }}</td>
+                        <td>{{ key.val5 }}</td>
+                        <td>{{ key.power_ball }}</td>
+                        <td>${{ value }}</td>
+                    {% endfor %}
+                {% else %}
                     <tr style="text-align: center">
-                    <td></td>
-                    <td>{{ key }}</td>
-                    <td>${{ value }}</td>
-                {% endfor %}
-            </tr>
+                    <td>{{ k | date:"DATE_FORMAT" }}</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                {% endif %}
+                </tr>
         {% endfor %}
     </table>
 {% endif %}

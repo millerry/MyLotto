@@ -26,6 +26,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend' # todo: don't forget to remove this if ever deployed to server
 
 # Application definition
 

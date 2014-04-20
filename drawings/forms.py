@@ -14,7 +14,7 @@ class viewDrawingsForm(forms.Form):
         officialDrawings = []
         iterationDate = self.getNextDrawingDate(purchaseDate)
         drawingsRecorded = 0
-        while iterationDate is not None or numberOfDrawings >= drawingsRecorded:
+        while iterationDate is not None and numberOfDrawings > drawingsRecorded:
             try:
                 officialDrawings.append(OfficialDrawing.objects.get(drawing_date=iterationDate))
                 iterationDate += timedelta(days=1)
@@ -76,11 +76,9 @@ class viewDrawingsForm(forms.Form):
             if ticketDrawing.power_ball == officialDrawing.power_ball:
                 megaBallMatched = True
             if regularNumbersMatched or megaBallMatched:
-                drawingString = str(ticketDrawing.val1) + ' ' + str(ticketDrawing.val2) + ' ' + str(ticketDrawing.val3) + ' ' + \
-                                str(ticketDrawing.val4) + ' ' + str(ticketDrawing.val5) + ' ' + str(ticketDrawing.power_ball)
                 winningValue = self.calculateWinningValue(regularNumbersMatched, megaBallMatched)
                 if winningValue:
-                    matchedNumbersDict[drawingString] = winningValue
+                    matchedNumbersDict[ticketDrawing] = winningValue
         return matchedNumbersDict
 
     def generatePayoutDictionary(self, lottoTicket, applicableDrawings):

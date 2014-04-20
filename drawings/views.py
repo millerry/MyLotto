@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.utils import timezone
 from drawings.models import LottoTicket, Drawing
 from forms import viewDrawingsForm
+from django.core.mail import send_mail
 
 
 def index(request):
