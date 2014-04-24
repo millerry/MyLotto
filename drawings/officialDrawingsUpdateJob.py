@@ -2,9 +2,11 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "MyLotto.settings")
 import urllib2
 import json
+from forms import viewDrawingsForm
 from HTMLParser import HTMLParser
 from datetime import datetime
 from drawings.models import OfficialDrawing, LottoTicket, Drawing
+from drawings import sendTextMessages
 
 
 class parseHtml(HTMLParser):
@@ -49,8 +51,7 @@ def constructOfficialDrawing(data):
             newDrawing.multiplier = 1
         newDrawing.save()
         print 'inserted an official drawing in the database \n'
-
-
+totalOfficialDrawings = len(OfficialDrawing.objects.all())
 base_url = urllib2.urlopen('http://data.ny.gov/resource/5xaw-6ayf.json')
 html = base_url.read()
 json_data = json.loads(html)
@@ -74,3 +75,27 @@ data_handler.handle_data(json.loads(html))
 #
 # draw.save()
 
+#if an entry was added, send out an SMS alert
+if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
+    lottoTicket = LottoTicket.objects.get(ticket_title="April Ticket")
+    drawingsForm = viewDrawingsForm()
+    payoutDict = drawingsForm.generatePayoutDictionary(lottoTicket, viewDrawingsForm.getApplicableOfficialDrawings(drawingsForm,lottoTicket.date_purchased, lottoTicket.number_of_draws))
+
+    total = 0
+    msg = "Lotto Update"
+    for key, value in payoutDict.items():
+        for k,v in value.items():
+           if v:
+               drawing = Drawing.objects.get(id=k.id)
+               msg += '\n' + str(key.month) + '/' + str(key.day)
+               msg += ' ' + str(drawing.val1) \
+                      + ' ' + str(drawing.val2) \
+                      + ' ' + str(drawing.val3) \
+                      + ' ' + str(drawing.val4) \
+                      + ' ' + str(drawing.val5) \
+                      + ' ' + str(drawing.power_ball)
+               msg += ': $' + v
+               total += int(v)
+
+    msg += '\nTotal: $' + str(total)
+    sendTextMessages.sendTexts(msg)
