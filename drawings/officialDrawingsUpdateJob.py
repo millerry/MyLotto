@@ -58,6 +58,12 @@ json_data = json.loads(html)
 data_handler = parseHtml()
 data_handler.handle_data(json.loads(html))
 
+def createSMSListFromFile(fileName):
+    fileObject = open(fileName, 'rU')
+    fileText = fileObject.read()
+    fileObject.close()
+    return fileText.split(',')
+
 # script for creating a ticket and entering one drawing on it
 # ticket = LottoTicket()
 # ticket.ticket_title = 'April Ticket'
@@ -83,11 +89,17 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
 
     total = 0
     msg = "Lotto Update"
+    shortMsg = msg
+    lastAmount = ""
+    lastDateString = ""
     for key, value in payoutDict.items():
+        lastAmount = 0
         for k,v in value.items():
-           if v:
+            lastDateString = str(key.month) + '/' + str(key.day)
+            if v:
+               lastAmount += int(v)
                drawing = Drawing.objects.get(id=k.id)
-               msg += '\n' + str(key.month) + '/' + str(key.day)
+               msg += '\n' + lastDateString
                msg += ' ' + str(drawing.val1) \
                       + ' ' + str(drawing.val2) \
                       + ' ' + str(drawing.val3) \
@@ -97,5 +109,11 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
                msg += ': $' + v
                total += int(v)
 
-    msg += '\nTotal: $' + str(total)
-    sendTextMessages.sendTexts(msg)
+    totalString = '\nTotal: $' + str(total)
+    msg += totalString
+    shortMsg += '\nLast Draw - ' + lastDateString + ': $' + str(lastAmount) + totalString
+    toaddrs_shortMessage = createSMSListFromFile('shortMessageUsers.txt')
+    toaddrs_longMessage = createSMSListFromFile('longMessageUsers.txt')
+
+    sendTextMessages.sendTexts(shortMsg, toaddrs_shortMessage)
+    sendTextMessages.sendTexts(shortMsg, toaddrs_longMessage)
