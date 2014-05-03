@@ -51,12 +51,7 @@ def constructOfficialDrawing(data):
             newDrawing.multiplier = 1
         newDrawing.save()
         print 'inserted an official drawing in the database \n'
-totalOfficialDrawings = len(OfficialDrawing.objects.all())
-base_url = urllib2.urlopen('http://data.ny.gov/resource/5xaw-6ayf.json')
-html = base_url.read()
-json_data = json.loads(html)
-data_handler = parseHtml()
-data_handler.handle_data(json.loads(html))
+
 
 def createSMSListFromFile(fileName):
     fileObject = open(fileName, 'rU')
@@ -64,26 +59,16 @@ def createSMSListFromFile(fileName):
     fileObject.close()
     return fileText.split(',')
 
-# script for creating a ticket and entering one drawing on it
-# ticket = LottoTicket()
-# ticket.ticket_title = 'April Ticket'
-# ticket.date_purchased = '2014-04-01'
-# ticket.number_of_draws = 9
-# ticket.save()
-# draw = Drawing()
-# draw.lotto_ticket = LottoTicket.objects.get(ticket_title='April Ticket')
-# draw.val1 = 03
-# draw.val2 = 21
-# draw.val3 = 30
-# draw.val4 = 31
-# draw.val5 = 51
-# draw.power_ball = 02
-#
-# draw.save()
+totalOfficialDrawings = len(OfficialDrawing.objects.all())
+base_url = urllib2.urlopen('http://data.ny.gov/resource/5xaw-6ayf.json')
+html = base_url.read()
+json_data = json.loads(html)
+data_handler = parseHtml()
+data_handler.handle_data(json.loads(html))
 
-#if an entry was added, send out an SMS alert
+# @comment if an entry was added, send out an SMS alert
 if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
-    lottoTicket = LottoTicket.objects.get(ticket_title="April Ticket")
+    lottoTicket = LottoTicket.objects.get(ticket_title="May\'s Ticket")
     drawingsForm = viewDrawingsForm()
     payoutDict = drawingsForm.generatePayoutDictionary(lottoTicket, viewDrawingsForm.getApplicableOfficialDrawings(drawingsForm,lottoTicket.date_purchased, lottoTicket.number_of_draws))
 
@@ -92,6 +77,7 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
     shortMsg = msg
     lastAmount = ""
     lastDateString = ""
+    numberOfDrawsLeft = lottoTicket.number_of_draws - len(payoutDict.keys())
     for key, value in payoutDict.items():
         lastAmount = 0
         for k,v in value.items():
@@ -109,9 +95,9 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
                msg += ': $' + v
                total += int(v)
 
-    totalString = '\nTotal: $' + str(total)
+    totalString = '\nTo-Date: $' + str(total)
     msg += totalString
-    shortMsg += '\nLast Draw - ' + lastDateString + ': $' + str(lastAmount) + totalString
+    shortMsg += '\nLast Draw - ' + lastDateString + ': $' + str(lastAmount) + totalString + '\nDraws remaining: ' + str(numberOfDrawsLeft)
     toaddrs_shortMessage = createSMSListFromFile('shortMessageUsers.txt')
     toaddrs_longMessage = createSMSListFromFile('longMessageUsers.txt')
 
