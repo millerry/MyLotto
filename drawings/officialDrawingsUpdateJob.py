@@ -7,6 +7,7 @@ from HTMLParser import HTMLParser
 from datetime import datetime
 from drawings.models import OfficialDrawing, LottoTicket, Drawing
 from drawings import sendTextMessages
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class parseHtml(HTMLParser):
@@ -19,7 +20,6 @@ class parseHtml(HTMLParser):
         pass
 
     def handle_data(self, data):
-        index = 0
         for item in data:
             constructOfficialDrawing(item)
 
@@ -37,14 +37,14 @@ def constructOfficialDrawing(data):
     winning_numbers_list = data['winning_numbers'].split()
     try:
         OfficialDrawing.objects.get(drawing_date=str(date_object))
-    except:
+    except ObjectDoesNotExist:
         newDrawing = OfficialDrawing(drawing_date=date_object)
         newDrawing.val1 = winning_numbers_list[0]
         newDrawing.val2 = winning_numbers_list[1]
         newDrawing.val3 = winning_numbers_list[2]
         newDrawing.val4 = winning_numbers_list[3]
         newDrawing.val5 = winning_numbers_list[4]
-        newDrawing.power_ball = megaball
+        newDrawing.mega_ball = megaball
         if multiplier:
             newDrawing.multiplier = multiplier
         else:
@@ -67,7 +67,7 @@ data_handler = parseHtml()
 data_handler.handle_data(json.loads(html))
 
 # @comment if an entry was added, send out an SMS alert
-if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
+if len(OfficialDrawing.objects.all()) > totalOfficialDrawings or True:
     lottoTicket = LottoTicket.objects.get(ticket_title="May\'s Ticket")
     drawingsForm = viewDrawingsForm()
     payoutDict = drawingsForm.generatePayoutDictionary(lottoTicket, viewDrawingsForm.getApplicableOfficialDrawings(drawingsForm,lottoTicket.date_purchased, lottoTicket.number_of_draws))
@@ -80,8 +80,8 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
     numberOfDrawsLeft = lottoTicket.number_of_draws - len(payoutDict.keys())
     for key, value in payoutDict.items():
         lastAmount = 0
-        for k,v in value.items():
-            lastDateString = str(key.month) + '/' + str(key.day)
+        lastDateString = str(key.month) + '/' + str(key.day)
+    for k,v in value.items():
             if v:
                lastAmount += int(v)
                drawing = Drawing.objects.get(id=k.id)
@@ -91,7 +91,7 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
                       + ' ' + str(drawing.val3) \
                       + ' ' + str(drawing.val4) \
                       + ' ' + str(drawing.val5) \
-                      + ' ' + str(drawing.power_ball)
+                      + ' ' + str(drawing.mega_ball)
                msg += ': $' + v
                total += int(v)
 
@@ -102,4 +102,4 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings:
     toaddrs_longMessage = createSMSListFromFile('longMessageUsers.txt')
 
     sendTextMessages.sendTexts(shortMsg, toaddrs_shortMessage)
-    sendTextMessages.sendTexts(shortMsg, toaddrs_longMessage)
+    # sendTextMessages.sendTexts(shortMsg, toaddrs_longMessage)

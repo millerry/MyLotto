@@ -35,7 +35,7 @@ def viewTickets(request):
     return render(request, 'drawings/viewTickets.html', context)
 
 
-def addDrawing(request): #, number2, number3, number4, number5, powerball):
+def addDrawing(request): #, number2, number3, number4, number5, megaball): # todo: make functional, or delete
     print "in addDrawing"
     drawing = Drawing(drawing_date=timezone.now())
     drawing.val1 = 11
@@ -43,6 +43,6 @@ def addDrawing(request): #, number2, number3, number4, number5, powerball):
     drawing.val3 = 33
     drawing.val4 = 44
     drawing.val5 = 55
-    drawing.power_ball = 66
+    drawing.mega_ball = 66
     drawing.save()
     return index(request)

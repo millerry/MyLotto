@@ -1,8 +1,4 @@
-import datetime
-import calendar
-
 from django.db import models
-from django.utils import timezone
 
 
 class LottoTicket(models.Model):
@@ -22,7 +18,7 @@ class Drawing(models.Model):
     val3 = models.IntegerField()
     val4 = models.IntegerField()
     val5 = models.IntegerField()
-    power_ball = models.IntegerField()
+    mega_ball = models.IntegerField()
 
     def __unicode__(self):
         return unicode(self.id)
@@ -35,7 +31,7 @@ class OfficialDrawing(models.Model):
     val3 = models.IntegerField()
     val4 = models.IntegerField()
     val5 = models.IntegerField()
-    power_ball = models.IntegerField()
+    mega_ball = models.IntegerField()
     multiplier = models.IntegerField()
 
     def __unicode__(self):

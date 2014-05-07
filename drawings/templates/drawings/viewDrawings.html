@@ -17,7 +17,7 @@
                 <td>{{ drawing.val3 }}</td>
                 <td>{{ drawing.val4 }}</td>
                 <td>{{ drawing.val5 }}</td>
-                <td>{{ drawing.power_ball }}</td>
+                <td>{{ drawing.mega_ball }}</td>
                 <td><a href="maintainDrawing/{{ drawing.id }}">Edit</a></td>
             </tr>
         {% endfor %}
@@ -48,7 +48,7 @@
                 <td>{{ officialDrawing.val3 }}</td>
                 <td>{{ officialDrawing.val4 }}</td>
                 <td>{{ officialDrawing.val5 }}</td>
-                <td>{{ officialDrawing.power_ball }}</td>
+                <td>{{ officialDrawing.mega_ball }}</td>
                 <td>{{ officialDrawing.multiplier }}x</td>
             </tr>
         {% endfor %}
@@ -80,7 +80,7 @@
                         <td>{{ key.val3 }}</td>
                         <td>{{ key.val4 }}</td>
                         <td>{{ key.val5 }}</td>
-                        <td>{{ key.power_ball }}</td>
+                        <td>{{ key.mega_ball }}</td>
                         <td>${{ value }}</td>
                     {% endfor %}
                 {% else %}

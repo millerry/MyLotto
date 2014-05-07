@@ -7,7 +7,7 @@
             <th>&nbsp;#3&nbsp;</th>
             <th>&nbsp;#4&nbsp;</th>
             <th>&nbsp;#5&nbsp;</th>
-            <th>&nbsp;PB&nbsp;</th>
+            <th>&nbsp;MB&nbsp;</th>
             <th>&nbsp;Multiplier&nbsp;</th>
         </tr>
         {% for officialDrawing in OfficialDrawing.objects.all %}
@@ -18,7 +18,7 @@
                 <td>{{ officialDrawing.val3 }}</td>
                 <td>{{ officialDrawing.val4 }}</td>
                 <td>{{ officialDrawing.val5 }}</td>
-                <td>{{ officialDrawing.power_ball }}</td>
+                <td>{{ officialDrawing.mega_ball }}</td>
                 <td>{{ lotto_ticket.multiplier }}x</td>
             </tr>
         {% endfor %}

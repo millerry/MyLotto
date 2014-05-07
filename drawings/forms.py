@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 class drawingForm(ModelForm):
     class Meta:
         model = Drawing
-        fields = ['lotto_ticket', 'val1', 'val2', 'val3', 'val4', 'val5', 'power_ball']
+        fields = ['lotto_ticket', 'val1', 'val2', 'val3', 'val4', 'val5', 'mega_ball']
 
 
 class viewDrawingsForm(forms.Form):
@@ -73,7 +73,7 @@ class viewDrawingsForm(forms.Form):
                 regularNumbersMatched += 1
             if ticketDrawing.val5 == officialDrawing.val5:
                 regularNumbersMatched += 1
-            if ticketDrawing.power_ball == officialDrawing.power_ball:
+            if ticketDrawing.mega_ball == officialDrawing.mega_ball:
                 megaBallMatched = True
             if regularNumbersMatched or megaBallMatched:
                 winningValue = self.calculateWinningValue(regularNumbersMatched, megaBallMatched)
