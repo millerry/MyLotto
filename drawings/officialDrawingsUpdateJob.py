@@ -81,19 +81,19 @@ if len(OfficialDrawing.objects.all()) > totalOfficialDrawings or True:
     for key, value in payoutDict.items():
         lastAmount = 0
         lastDateString = str(key.month) + '/' + str(key.day)
-    for k,v in value.items():
-            if v:
-               lastAmount += int(v)
-               drawing = Drawing.objects.get(id=k.id)
-               msg += '\n' + lastDateString
-               msg += ' ' + str(drawing.val1) \
-                      + ' ' + str(drawing.val2) \
-                      + ' ' + str(drawing.val3) \
-                      + ' ' + str(drawing.val4) \
-                      + ' ' + str(drawing.val5) \
-                      + ' ' + str(drawing.mega_ball)
-               msg += ': $' + v
-               total += int(v)
+        for k,v in value.items():
+                if v:
+                   lastAmount += int(v)
+                   drawing = Drawing.objects.get(id=k.id)
+                   msg += '\n' + lastDateString
+                   msg += ' ' + str(drawing.val1) \
+                          + ' ' + str(drawing.val2) \
+                          + ' ' + str(drawing.val3) \
+                          + ' ' + str(drawing.val4) \
+                          + ' ' + str(drawing.val5) \
+                          + ' ' + str(drawing.mega_ball)
+                   msg += ': $' + v
+                   total += int(v)
 
     totalString = '\nTo-Date: $' + str(total)
     msg += totalString
