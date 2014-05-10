@@ -64,7 +64,7 @@ base_url = urllib2.urlopen('http://data.ny.gov/resource/5xaw-6ayf.json')
 html = base_url.read()
 json_data = json.loads(html)
 data_handler = parseHtml()
-data_handler.handle_data(json.loads(html))
+data_handler.handle_data(json_data)
 
 # @comment if an entry was added, send out an SMS alert
 if len(OfficialDrawing.objects.all()) > totalOfficialDrawings or True:

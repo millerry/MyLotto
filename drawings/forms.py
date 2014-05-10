@@ -1,6 +1,7 @@
+import collections
+from datetime import datetime, timedelta
 from django.forms import ModelForm, forms
 from drawings.models import Drawing, OfficialDrawing
-from datetime import datetime, timedelta
 
 
 class drawingForm(ModelForm):
@@ -59,7 +60,7 @@ class viewDrawingsForm(forms.Form):
         return payout
 
     def calculateMatchedNumbers(self, ticketDrawings, officialDrawing):
-        matchedNumbersDict = {}
+        matchedNumbersDict = collections.OrderedDict()
         for ticketDrawing in ticketDrawings.all():
             regularNumbersMatched = 0
             megaBallMatched = False
@@ -82,7 +83,7 @@ class viewDrawingsForm(forms.Form):
         return matchedNumbersDict
 
     def generatePayoutDictionary(self, lottoTicket, applicableDrawings):
-        payoutDict = {}
+        payoutDict = collections.OrderedDict()
         for officialDrawing in applicableDrawings:
             matchedNumbersDict = self.calculateMatchedNumbers(lottoTicket.drawing_set, officialDrawing)
             payoutDict[officialDrawing.drawing_date] = matchedNumbersDict
