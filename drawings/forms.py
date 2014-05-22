@@ -60,19 +60,20 @@ class viewDrawingsForm(forms.Form):
         return payout
 
     def calculateMatchedNumbers(self, ticketDrawings, officialDrawing):
+        officalDrawingRegularNumbersList = [officialDrawing.val1, officialDrawing.val2, officialDrawing.val3, officialDrawing.val4, officialDrawing.val5]
         matchedNumbersDict = collections.OrderedDict()
         for ticketDrawing in ticketDrawings.all():
             regularNumbersMatched = 0
             megaBallMatched = False
-            if ticketDrawing.val1 == officialDrawing.val1:
+            if ticketDrawing.val1 in officalDrawingRegularNumbersList:
                 regularNumbersMatched += 1
-            if ticketDrawing.val2 == officialDrawing.val2:
+            if ticketDrawing.val2 in officalDrawingRegularNumbersList:
                 regularNumbersMatched += 1
-            if ticketDrawing.val3 == officialDrawing.val3:
+            if ticketDrawing.val3 in officalDrawingRegularNumbersList:
                 regularNumbersMatched += 1
-            if ticketDrawing.val4 == officialDrawing.val4:
+            if ticketDrawing.val4 in officalDrawingRegularNumbersList:
                 regularNumbersMatched += 1
-            if ticketDrawing.val5 == officialDrawing.val5:
+            if ticketDrawing.val5 in officalDrawingRegularNumbersList:
                 regularNumbersMatched += 1
             if ticketDrawing.mega_ball == officialDrawing.mega_ball:
                 megaBallMatched = True
